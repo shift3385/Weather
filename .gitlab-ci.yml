@@ -1,0 +1,23 @@
+stages:
+  - build
+  - test
+
+build_flaskapp:
+  stage: build
+  services:
+    - docker:dind
+  image: docker:latest
+  script:
+    - docker-compose -f docker-compose.yml build flaskapp
+
+run_tests:
+  stage: test
+  services:
+    - docker:dind
+  image: docker:latest
+  script:
+    - docker-compose -f docker-compose.yml up -d flaskapp
+    - docker-compose -f docker-compose.yml up -d ngrok
+    - docker-compose -f docker-compose.yml run --rm tests
+  after_script:
+    - docker-compose -f docker-compose.yml down

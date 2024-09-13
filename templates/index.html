@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Weather Assistant</title>
+        <link rel="stylesheet" href="/static/css/styles.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <link rel="icon" href="/static/img/bot2.png" type="image/png">
+
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="/static/js/scripts.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    </head>
+    <body>
+        <div class="chat-container">
+            <aside class="aside">
+                <div class="up-aside">
+                    <button class="new-conversation-button" onclick="newConversation()" title="New conversation"><i class="fas fa-comments"></i></button>
+                </div>
+                <div class="middle-aside">
+                    <div class="conversation-history" id="conversation-history"></div>
+                </div>
+                <div class="bottom-aside">
+                    <button class="clear-history-button" onclick="clearHistory()" title="Clear all conversations"><i class="fas fa-trash"></i></button>
+                </div>
+            </aside>
+            
+            <div id="toggle-aside" title="Expand/Collapse" onclick="toggleAside()">
+                <i id="toggle-icon" class="fas fa-angle-double-right"></i>
+            </div>
+
+            <div class="chat-content">
+                <div class="title-bar">
+                    <h1 id="chat-title">Weather Assistant</h1>
+                </div>
+
+                <div class="chat-window" id="chat-window"></div>
+
+                <div id="toast-notification" class="toast_hidde"></div>
+                
+                <div class="input-area">
+                    <input type="text" id="user-input" placeholder="Write a message...">
+                    <button id="sendMessage" onclick="sendMessage()" title="Send message"><i class="fas fa-pencil"></i></button>
+                    <button id="stopWriteMessage" onclick="stopTyping()" title="Stop write message" hidden><i class="fas fa-stop"></i></button>
+                    <button id="clearChatWindows" class="clear-chat-button" title="Clear chat" onclick="clearChat()"><i class="fas fa-eraser"></i></button>
+                    <button id="toggle-btn" data-value="50" title="Write speed">X1</button>
+                </div>
+            </div>
+        </div>
+        <div class="options-menu" id="options-menu">
+            <button onclick="deleteConversation()"><i class="fas fa-trash"></i> Delete conversation</button>
+            <button onclick="renameConversation()"><i class="fas fa-edit"></i> Rename conversation</button>
+        </div>
+
+        <div id="confirm-modal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 id="modal-title">Confirmation</h2>
+                </div>
+                <div class="modal-body">
+                    <p id="confirm-message">Are you sure you want to delete the entire history?</p>
+                </div>
+                <div class="modal-footer">
+                    <button id="confirm-yes">Yes</button>
+                    <button id="confirm-no">No</button>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

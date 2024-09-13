@@ -1,0 +1,46 @@
+version: '4.24.0'
+
+services:
+  flaskapp:
+    build: 
+      context: .
+      dockerfile: Dockerfile.flaskapp
+    ports:
+      - "5000:5000"
+    volumes:
+      - .:/app
+    environment:
+      - FLASK_ENV= "development"
+
+
+  ngrok:
+    image: ngrok/ngrok:latest
+    restart: unless-stopped
+    command:
+      - "http"
+      - "http://flaskapp:5000"
+      - "--log=stdout"
+    
+    environment:
+      NGROK_AUTHTOKEN: ${NGROK_AUTHTOKEN}
+      NGROK_DEBUG: true
+    depends_on:
+        - flaskapp
+    ports:
+      - 4040:4040
+    volumes:
+      - ./ngrok:/ngrok 
+  
+  tests:
+    build:
+        context: .
+        dockerfile: Dockerfile.flaskapp  
+    command: 
+      - "pytest"
+      - "--verbose"
+      - "--count=3"
+      - "--disable-warnings"
+    depends_on:
+      - flaskapp
+      - ngrok
+
